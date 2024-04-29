@@ -5,21 +5,22 @@ This is a repository which contains ready-to-execute codes that can be used by c
 _Note: Currently, only receive data functionality works_
 
 **Key features of rowentas-sync:**-
-1. **Non-GUI based** mechanism. It's completely C++ code based configuration
+1. **Non-GUI based** mechanism. It's completely a C++ code based configuration
 2. No GUI and no additional libraries required
 3. Easily integrate-able to your own code
 4. The code is developed on top of examples provided from msfs sdk
 
 **General Prerequisites:-**
 1. Microsoft Flight Simulator 2020
-2. Microsoft Visual Studio with c++ extension
-3. Arduino Mega board
-4. Arduino software (Windows)
+2. MSFS SDK and SDK samples (download and install)
+3. Microsoft Visual Studio with c++ extension
+4. Arduino Mega board
+5. Arduino software (Windows)
 
 **How does this work in general?**
-1. The cpp program will fetch aircraft variable from simconnect
-2. The variable will be sent to a serial port of the PC (the same port where Arduino is connected)
-3. Arduino will process this variable and do action
+1. The cpp program will fetch aircraft variable from MSFS sim using simconnect dll
+2. This variable will be sent to a serial port of the PC (the same port where Arduino is connected)
+3. Arduino will process this variable and do specified task (eg. light an led, spin a stepper motor etc.)
 
 **Parking brake toggle Example:-**
 1. Download msfs sdk and sdk samples (First part of this blog will help you -> https://medium.com/@edwinvarghese4442/getting-aircraft-data-from-msfs2020-via-simconnect-simvarwatcher-simplest-tutorial-ce93a425ccd7)
