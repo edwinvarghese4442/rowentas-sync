@@ -28,7 +28,7 @@ Parking brake toggle Example
 7. Run the RequestData.cpp
 8. Toggle aircraft parking brake and see how the led lights up and off
 
-   
+Note: Every time you unplug and plug the Arduino Mega, it resets itself, so you would need to compile and upload again. I believe a way around this is to programmatically compile and upload the sketch to Arduino via command line executions. This is not part of the code now, but it's in consideration. Please stay tuned. Thanks
 
 
 
