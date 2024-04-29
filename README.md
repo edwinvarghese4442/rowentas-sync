@@ -1,10 +1,10 @@
 **What is this ?**
 
-The Goal of the repository is to provide cockpit builders/flight sim enthusiasts ability to send/receive aircraft variables (for example. parking brake, speed knob, throttle, lcd display) with the help of a **Non-GUI based** mechanism
+This is a repository which contains ready-to-execute codes that can be used by cockpit builders/flight sim enthusiasts to send/receive aircraft variables such as parking brake, speed knob, throttle, lcd display etc. 
 _Note: Currently, only receive data functionality works_
 
 **Key features of rowentas-sync:**-
-1. Code based configuration and execution
+1. **Non-GUI based** mechanism. It's completely C++ code based configuration
 2. No GUI and no additional libraries required
 3. Easily integrate-able to your own code
 4. The code is developed on top of examples provided from msfs sdk
