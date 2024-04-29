@@ -2,7 +2,7 @@
 
 This is a repository which contains ready-to-execute codes that can be used by cockpit builders/flight sim enthusiasts to send/receive aircraft variables such as parking brake, speed knob, throttle, lcd display etc. 
 
-_Note: Currently, only receive data functionality works_
+_Note: Currently, only receive data of parking brake functionality works_
 
 **Key features of rowentas-sync:**-
 1. **Non-GUI based** mechanism. It's completely a C++ code based configuration
@@ -22,7 +22,7 @@ _Note: Currently, only receive data functionality works_
 2. This variable will be sent to a serial port of the PC (the same port where Arduino is connected)
 3. Arduino will process this variable and do specified task (eg. light an led, spin a stepper motor etc.)
 
-**Parking brake toggle Example:-**
+**Default a320 neo Parking brake toggle Example:-**
 1. Download msfs sdk and sdk samples (First part of this blog will help you -> https://medium.com/@edwinvarghese4442/getting-aircraft-data-from-msfs2020-via-simconnect-simvarwatcher-simplest-tutorial-ce93a425ccd7)
 2. Start the MSFS2020 sim and initiate a flight using the default a320 neo and aircraft position should be in runway 
 3. Open Arduino IDE and load arduino_receive (find it in the arduino_receive folder of this repo), plug in your Arduino Mega board (must have led with resistor connected in pin 3) and select the board in the IDE
