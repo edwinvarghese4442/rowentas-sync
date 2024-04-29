@@ -31,6 +31,10 @@ Parking brake toggle Example
 
 Note: Every time you unplug and plug the Arduino Mega, it resets itself, so you would need to compile and upload again. I believe a way around this is to programmatically compile and upload the sketch to Arduino via command line executions. This is not part of the code now, but it's in consideration. Please stay tuned. Thanks
 
+some settings from my VS studio
+1. project> 'project name' properties > Configuration properties > Character set: Use unicode character set
+2. project> 'project name' properties > c/c++ > precompiled headers: not using precompiled header
+
 
 
 https://github.com/edwinvarghese4442/rowentas-sync/assets/26130907/6a2a61c9-dfc1-4299-85e5-aeeb27f7d033
