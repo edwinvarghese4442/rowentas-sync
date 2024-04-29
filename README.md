@@ -19,13 +19,14 @@ How does this work in general?
 3. Arduino will process this variable and do action
 
 Parking brake toggle Example
-1. Start the MSFS2020 sim and initiate a flight using the default a320 neo
-2. Open Arduino IDE and load arduino_receive, plug in your Arduino Mega board (must have led with resistor connected in pin 3) and select the board in the IDE
+1. Start the MSFS2020 sim and initiate a flight using the default a320 neo and aircraft position should be in runway 
+2. Open Arduino IDE and load arduino_receive (find it in the arduino_receive folder of this repo), plug in your Arduino Mega board (must have led with resistor connected in pin 3) and select the board in the IDE
 3. Verify/compile the Arduino code and upload to the board
-4. Open RequestData.cpp and make sure the port value is same (it was COM3 in the time of development). Change if required
-5. Build and compile RequestData.cpp file from VS
-6. Run the RequestData.cpp
-7. Toggle aircraft parking brake and see how the led lights up and off
+4. Create a cpp project in visual studio and RequestData.cpp to source files
+5. Open RequestData.cpp and make sure the port value is same arduino's port (COM3, COM1 etc are the usual ports). Change if required
+6. Build and compile RequestData.cpp file from visual studio
+7. Run the RequestData.cpp
+8. Toggle aircraft parking brake and see how the led lights up and off
 
    
 
