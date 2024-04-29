@@ -19,7 +19,7 @@ How does this work in general?
 3. Arduino will process this variable and do action
 
 Parking brake toggle Example
-1. Download msfs sdk and sdk samples (This blog will help you -> https://medium.com/@edwinvarghese4442/getting-aircraft-data-from-msfs2020-via-simconnect-simvarwatcher-simplest-tutorial-ce93a425ccd7)
+1. Download msfs sdk and sdk samples (First part of this blog will help you -> https://medium.com/@edwinvarghese4442/getting-aircraft-data-from-msfs2020-via-simconnect-simvarwatcher-simplest-tutorial-ce93a425ccd7)
 2. Start the MSFS2020 sim and initiate a flight using the default a320 neo and aircraft position should be in runway 
 3. Open Arduino IDE and load arduino_receive (find it in the arduino_receive folder of this repo), plug in your Arduino Mega board (must have led with resistor connected in pin 3) and select the board in the IDE
 4. Verify/compile the Arduino code and upload to the board
