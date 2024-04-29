@@ -19,14 +19,15 @@ How does this work in general?
 3. Arduino will process this variable and do action
 
 Parking brake toggle Example
-1. Start the MSFS2020 sim and initiate a flight using the default a320 neo and aircraft position should be in runway 
-2. Open Arduino IDE and load arduino_receive (find it in the arduino_receive folder of this repo), plug in your Arduino Mega board (must have led with resistor connected in pin 3) and select the board in the IDE
-3. Verify/compile the Arduino code and upload to the board
-4. Create a cpp project in visual studio and RequestData.cpp to source files
-5. Open RequestData.cpp and make sure the port value is same arduino's port (COM3, COM1 etc are the usual ports). Change if required
-6. Build and compile RequestData.cpp file from visual studio
-7. Run the RequestData.cpp
-8. Toggle aircraft parking brake and see how the led lights up and off
+1. Download msfs sdk and sdk samples (This blog will help you -> https://medium.com/@edwinvarghese4442/getting-aircraft-data-from-msfs2020-via-simconnect-simvarwatcher-simplest-tutorial-ce93a425ccd7)
+2. Start the MSFS2020 sim and initiate a flight using the default a320 neo and aircraft position should be in runway 
+3. Open Arduino IDE and load arduino_receive (find it in the arduino_receive folder of this repo), plug in your Arduino Mega board (must have led with resistor connected in pin 3) and select the board in the IDE
+4. Verify/compile the Arduino code and upload to the board
+5. Create a cpp project in visual studio and RequestData.cpp to source files
+6. Open RequestData.cpp and make sure the port value is same arduino's port (COM3, COM1 etc are the usual ports). Change if required
+7. Build and compile RequestData.cpp file from visual studio
+8. Run the RequestData.cpp
+9. Toggle aircraft parking brake and see how the led lights up and off
 
 Note: Every time you unplug and plug the Arduino Mega, it resets itself, so you would need to compile and upload again. I believe a way around this is to programmatically compile and upload the sketch to Arduino via command line executions. This is not part of the code now, but it's in consideration. Please stay tuned. Thanks
 
