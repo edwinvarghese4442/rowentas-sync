@@ -11,7 +11,7 @@ General Prerequisites:-
 1. Microsoft Flight Simulator 2020
 2. Microsoft Visual Studio with c++ extension
 3. Arduino Mega board
-4. Arduino software with IDE (not required once code is compiled and uploaded to Arduino Mega board)
+4. Arduino software (Windows)
 
 How does this work in general?
 1. The cpp program will fetch aircraft variable from simconnect
