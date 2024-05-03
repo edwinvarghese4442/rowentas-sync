@@ -47,7 +47,7 @@ Note: Every time you unplug and plug the Arduino Mega, it resets itself, so you 
 1. project> 'project name' properties > Configuration properties > Character set: Use unicode character set
 2. project> 'project name' properties > c/c++ > precompiled headers: not using precompiled header
 
-
+Topic I am maintaining in flight simulator forum -> https://forums.flightsimulator.com/t/getting-aircraft-data-simconnect-and-lvars-and-sending-it-to-arduino-using-just-simconnect-c-and-arduino/639872
 
 https://github.com/edwinvarghese4442/rowentas-sync/assets/26130907/6a2a61c9-dfc1-4299-85e5-aeeb27f7d033
 
