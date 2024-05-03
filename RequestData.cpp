@@ -3,25 +3,32 @@
 #include <tchar.h>
 #include <stdio.h>
 #include <strsafe.h>
+#include <fstream>
+#include <sstream>
+#include <map>
 #include <vector>
-//#include "Arduino.h"
 #include "SimConnect.h"
+
+// Manual implementation of to_string function for compilers lacking support
+template <typename T>
+std::string to_string(const T& value) {
+    std::ostringstream oss;
+    oss << value;
+    return oss.str();
+}
 
 int quit = 0;
 HANDLE hSimConnect = NULL;
+const wchar_t* PORTNAME = L"COM3";// Change this to the appropriate port name
+const int BAUD_RATE = 9600;
 
-//const int ledPin = 3; // Pin number for the LED
-//
-//void setup() {
-//    pinMode(ledPin, OUTPUT); // Set the LED pin as an output
-//}
+
 struct Struct1
 {
     char    title[256];
-    double  kohlsmann;
-    double  altitude;
-    double  latitude;
-    double  longitude;
+    double  togdisp;
+    double  togmach;
+    double  togpb;
 };
 
 static enum DATA_DEFINE_ID {
@@ -32,6 +39,8 @@ static enum DATA_REQUEST_ID {
     REQUEST_1,
 };
 
+
+// Function to send dictionary over serial port
 bool sendDataViaSerial(const wchar_t* portName, int baudRate, const char* data) {
     // Open serial port
     HANDLE hSerial = CreateFileW(portName, GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -74,7 +83,6 @@ bool sendDataViaSerial(const wchar_t* portName, int baudRate, const char* data) 
 }
 
 
-
 void CALLBACK MyDispatchProcRD(SIMCONNECT_RECV* pData, DWORD cbData, void* pContext)
 {
     HRESULT hr;
@@ -89,41 +97,51 @@ void CALLBACK MyDispatchProcRD(SIMCONNECT_RECV* pData, DWORD cbData, void* pCont
         {
         case REQUEST_1:
         {
-            int val_alt = 0;
+            int val_togdisp = 0;
+            int val_togmach = 0;
+            int val_togpb = 0;
             DWORD ObjectID = pObjData->dwObjectID;
             Struct1* pS = (Struct1*)&pObjData->dwData;
             if (SUCCEEDED(StringCbLengthA(&pS->title[0], sizeof(pS->title), NULL))) // security check
             {
-                val_alt = int(pS->altitude);
-                
                 //printf("\nObjectID=%d  Title=\"%s\"\nLat=%f  Lon=%f  brakepark=%f  Kohlsman=%.2f", ObjectID, pS->title, pS->latitude, pS->longitude, pS->altitude, pS->kohlsmann);
-                printf("\nObjectID=%d  Title=\"%s\"\nbrakepark=%f", ObjectID, pS->title, pS->altitude);
+                //printf("\nObjectID=%d  Title=\"%s\ togdisp=%f togmach =%f togpb=%f", ObjectID, pS->title, pS->togdisp,  pS->togmach,  pS->togpb);
+                //printf("Boolean value: %d\n", pS->bpi);
+                val_togdisp = int(pS->togdisp);
+                val_togmach = int(pS->togmach);
+                val_togpb = int(pS->togpb);
 
-            }
-            // Define serial port parameters
-            const wchar_t* portName = L"COM3";// Change this to the appropriate port name
-            const int baudRate = 9600; // Change this to the appropriate baud rate
-            printf("Integer: %d\n", val_alt);
-            // Define data to send
-            const char* valueStr = "43";
-            if (val_alt == 0) {
-                valueStr = "43";
-            }
-            else {
-                valueStr = "42";
+                //std::string portName = "COM3"; // Serial port name for Windows
+                std::string tempstr = "togdisp:" + std::to_string(val_togdisp) + ",togmach:" + std::to_string(val_togmach) + ",togpb:" + std::to_string(val_togpb) + ",togpxb:" + std::to_string(val_togpb);
+                const char* valueStr = tempstr.c_str();
+
+
+                // Send data via serial port
+                if (sendDataViaSerial(PORTNAME, BAUD_RATE, valueStr)) {
+                    std::cout << valueStr << std::endl;
+                    std::cout << "Data sent successfully." << std::endl;
+                }
+                else {
+                    std::cerr << "Failed to send data." << std::endl;
+                }
+
+                //std::map<std::string, int> dictionary = {
+                //    {"togdisp", val_togdisp},
+                //    {"togmach", val_togmach},
+                //    {"togpbxx", val_togpb}
+                //    // Add more key-value pairs as needed
+                //};
+                //for (const auto& pair : dictionary) {
+                //    std::cout << pair.first << ": " << pair.second << std::endl;
+                //}
+                //sendDictionary(PORTNAME, dictionary);
             }
 
-            // Send data via serial port
-            if (sendDataViaSerial(portName, baudRate, valueStr)) {
-                std::cout << valueStr << std::endl;
-                std::cout << "Data sent successfully." << std::endl;
-            }
-            else {
-                std::cerr << "Failed to send data." << std::endl;
-            }
+
         }
 
         default:
+
             break;
         }
         break;
@@ -148,8 +166,9 @@ void RequestData()
     HRESULT hr = SimConnect_RequestDataOnSimObjectType(hSimConnect, REQUEST_1, DEFINITION_1, 0, SIMCONNECT_SIMOBJECT_TYPE_USER);
     if (FAILED(hr))
     {
-        printf("\nRequest data failed");
         // Handle request failure
+        printf("\nRequest data failed");
+
     }
 }
 
@@ -162,19 +181,24 @@ void testDataRequest()
     {
         printf("\nConnected to Flight Simulator!");
 
-        // Set up the data definition, but do not yet do anything with it
-        hr = SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_1, "Title", NULL, SIMCONNECT_DATATYPE_STRING256);
-        hr = SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_1, "Kohlsman setting hg", "inHg");
-        hr = SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_1, "BRAKE PARKING INDICATOR", "Bool");
-        hr = SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_1, "Plane Latitude", "degrees");
-        hr = SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_1, "Plane Longitude", "degrees");
+        for (int i = 0; i < 1; i++)
+        {
+            // Set up the data definition, but do not yet do anything with it
+            hr = SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_1, "Title", NULL, SIMCONNECT_DATATYPE_STRING256);
+            //hr = SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_1, "Kohlsman setting hg", "inHg");
+            hr = SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_1, "L:A32NX_TRK_FPA_MODE_ACTIVE", "number", SIMCONNECT_DATATYPE_FLOAT64);
+            hr = SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_1, "AUTOPILOT MANAGED SPEED IN MACH", "number", SIMCONNECT_DATATYPE_FLOAT64);
+            hr = SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_1, "L:A32NX_PARK_BRAKE_LEVER_POS", "number", SIMCONNECT_DATATYPE_FLOAT64);
 
-        // Main loop
+            //hr = SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_1, "Plane Latitude", "degrees");
+            //hr = SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_1, "Plane Longitude", "degrees");
+        }
+
         while (true)
         {
             RequestData();
             SimConnect_CallDispatch(hSimConnect, MyDispatchProcRD, NULL);
-            Sleep(20); // Allow other threads to execute
+            Sleep(10); // Allow other threads to execute
         }
 
         // Cleanup
@@ -182,14 +206,9 @@ void testDataRequest()
     }
 }
 
-/*int _tmain(int argc, _TCHAR* argv[])
-{
-    testDataRequest();
 
-    return 0;
-}*/
 int main() {
-    
+
     testDataRequest();
 
     return 0;

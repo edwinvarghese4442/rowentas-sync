@@ -1,31 +1,70 @@
-const int LED_PIN = 3; // Define the pin connected to the LED
 
 void setup() {
-  // Initialize serial communication
   Serial.begin(9600);
-  Serial.setTimeout(20);
-  // Set the LED pin as an output
-  pinMode(LED_PIN, OUTPUT);
+  Serial.setTimeout(15);
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+  pinMode(5, OUTPUT);
 }
 
 void loop() {
-  // Check if data is available to read
   if (Serial.available()) {
-    // Read string value
-    String valueStr = Serial.readString();
-    
-    // Convert string to integer
-    int value = valueStr.toInt();
-    
-    // Print received value
-    //Serial.print("Received value: ");
-    //Serial.println(value);
-    
-    // Example: Turn on LED if received value is 42
-    if (value == 42) {
-      digitalWrite(LED_PIN, HIGH);
-    } else {
-      digitalWrite(LED_PIN, LOW);
+    String data = Serial.readStringUntil('\n');
+    parseDictionary(data);
+  }
+}
+
+void parseDictionary(String data) {
+  Serial.println(data);
+  int startPos = 0;
+  while (startPos < data.length()) {
+    // Serial.println(startPos);
+    // Serial.println(data.length());
+    int colonPos = data.indexOf(':', startPos);
+    Serial.println(colonPos);
+    if (colonPos == -1) {
+      break;
     }
+    String key = data.substring(startPos, colonPos);
+    int commaPos = data.indexOf(',', colonPos);
+    Serial.println(commaPos);
+    if (commaPos == -1) {
+      break;
+    }
+    String valueStr = data.substring(colonPos + 1, commaPos);
+    int value = valueStr.toInt(); // Convert value string to integer
+    Serial.println(key);
+    Serial.println(value);
+
+
+
+    // Check for specific key-value combinations and illuminate the LED accordingly
+    if (key == "togdisp" && value == 1) {
+      digitalWrite(5, HIGH); // Turn on LED
+    }
+    else if (key == "togdisp" && value == 0) {
+      digitalWrite(5, LOW);
+    }
+
+    if (key == "togmach" && value == 1) {
+      digitalWrite(2, HIGH); // Turn on LED
+    }
+    else if (key == "togmach" && value == 0){
+      digitalWrite(2, LOW);
+    }
+
+    if (key == "togpb" && value == 1) {
+      digitalWrite(3, HIGH); // Turn on LED
+    }
+    else if (key == "togpb" && value == 0){
+      digitalWrite(3, LOW);
+    }
+    
+    // Add more conditions for other key-value combinations as needed
+
+    startPos = commaPos + 1;
+    Serial.println(startPos);
+    Serial.println(data.length());
+    // startPos < data.length()
   }
 }
