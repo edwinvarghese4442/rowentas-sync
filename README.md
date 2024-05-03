@@ -52,3 +52,4 @@ Note: Every time you unplug and plug the Arduino Mega, it resets itself, so you 
 
 https://github.com/edwinvarghese4442/rowentas-sync/assets/26130907/6a2a61c9-dfc1-4299-85e5-aeeb27f7d033
 
+Topic I am maintaining the flight simulator form -> https://forums.flightsimulator.com/t/getting-aircraft-data-simconnect-and-lvars-and-sending-it-to-arduino-using-just-simconnect-c-and-arduino/639872
