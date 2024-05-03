@@ -7,6 +7,7 @@ Updated codes to handle 2 custom variable of fbwA320 and 1 simconnect variable o
 1. L:A32NX_TRK_FPA_MODE_ACTIVE
 2. AUTOPILOT MANAGED SPEED IN MACH
 3. L:A32NX_PARK_BRAKE_LEVER_POS
+   
 Find the above variables in FBW Doc -> https://docs.flybywiresim.com/fbw-a32nx/a32nx-api/a32nx-flightdeck-api/
 
 _Note: Facing latency issues but I believe it can be rectified_
