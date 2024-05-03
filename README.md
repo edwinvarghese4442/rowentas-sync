@@ -1,14 +1,22 @@
 **What is this ?**
 
-This is a repository which contains ready-to-execute codes that can be used by cockpit builders/flight sim enthusiasts to send/receive aircraft variables such as parking brake, speed knob, throttle, lcd display etc. 
+This is a repository that contains ready-to-execute codes that can be used by cockpit builders/flight sim enthusiasts to send/receive aircraft variables such as parking brake, speed knob, throttle, lcd display etc. 
 
-_Note: Currently, only receive data of parking brake functionality works_
+_Latest Commit Changes:_
+Updated codes to handle 2 custom variable of fbwA320 and 1 simconnect variable of the same aircraft
+1. L:A32NX_TRK_FPA_MODE_ACTIVE
+2. AUTOPILOT MANAGED SPEED IN MACH
+3. L:A32NX_PARK_BRAKE_LEVER_POS
+   
+Find the above variables in FBW Doc -> https://docs.flybywiresim.com/fbw-a32nx/a32nx-api/a32nx-flightdeck-api/
+
+_Note: Facing latency issues but I believe it can be rectified_
 
 **Key features of rowentas-sync:**-
-1. **Non-GUI based** mechanism. It's completely a C++ code based configuration
+1. **Non-GUI based** mechanism. It's completely a C++ code-based configuration
 2. No GUI and no additional libraries required
-3. Easily integrate-able to your own code
-4. The code is developed on top of examples provided from msfs sdk
+3. Easily integrate-able into your code
+4. The code is developed on top of examples provided by MSFS sdk
 
 **General Prerequisites:-**
 1. Microsoft Flight Simulator 2020
@@ -22,7 +30,7 @@ _Note: Currently, only receive data of parking brake functionality works_
 2. This variable will be sent to a serial port of the PC (the same port where Arduino is connected)
 3. Arduino will process this variable and do specified task (eg. light an led, spin a stepper motor etc.)
 
-**Default a320 neo Parking brake toggle Example:-**
+**FBW A320 neo Example:-**
 1. Download msfs sdk and sdk samples (First part of this blog will help you -> https://medium.com/@edwinvarghese4442/getting-aircraft-data-from-msfs2020-via-simconnect-simvarwatcher-simplest-tutorial-ce93a425ccd7)
 2. Start the MSFS2020 sim and initiate a flight using the default a320 neo and aircraft position should be in runway 
 3. Open Arduino IDE and load arduino_receive (find it in the arduino_receive folder of this repo), plug in your Arduino Mega board (must have led with resistor connected in pin 3) and select the board in the IDE
@@ -31,7 +39,7 @@ _Note: Currently, only receive data of parking brake functionality works_
 6. Open RequestData.cpp and make sure the port value is same arduino's port (COM3, COM1 etc are the usual ports). Change if required
 7. Build and compile RequestData.cpp file from visual studio
 8. Run the RequestData.cpp
-9. Toggle aircraft parking brake and see how the led lights up and off
+9. Toggle variables mentioned in the latest commit and see LEDs configured in arduino
 
 Note: Every time you unplug and plug the Arduino Mega, it resets itself, so you would need to compile and upload again. I believe a way around this is to programmatically compile and upload the sketch to Arduino via command line executions. This is not part of the code now, but it's in consideration. Please stay tuned. Thanks
 
