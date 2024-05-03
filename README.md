@@ -2,6 +2,7 @@
 
 This is a repository that contains ready-to-execute codes that can be used by cockpit builders/flight sim enthusiasts to send/receive aircraft variables such as parking brake, speed knob, throttle, lcd display etc. 
 Currently code only supports receiving data. For receiving Lvars, the difference required is to add a prefix of ‘**L:**’ before the API usage term.
+
 _Latest Commit Changes:_
 Updated codes to handle 2 Lvars of fbwA320 and 1 simconnect variable of the same aircraft
 1. L:A32NX_TRK_FPA_MODE_ACTIVE
